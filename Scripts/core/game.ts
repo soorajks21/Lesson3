@@ -7,11 +7,20 @@
   let stage:createjs.Stage;
   let helloLabel: objects.Label;
   let clickMeButton: objects.Button;
+  let assetManager : createjs.LoadQueue;
+  let assetManiest: any[];
+
+  assetManiest = [
+    {id:"clickMeButton",src:"/Assets/images/click-me-button.png"}
+  ];
 
   function Init():void {
     console.log("Initialization Started...");
-
-    Start();
+    assetManager = new createjs.LoadQueue();// create the assets manager objects
+    assetManager.installPlugin(createjs.Sound);// asset manager can also load sound
+    assetManager.loadManifest(assetManiest);
+    assetManager.on("complete",Start,this);
+   
   }
 
   function Start():void {
@@ -44,9 +53,8 @@ function clickMeButtonMouseClick():void{
 
     stage.addChild(helloLabel);
 
-    clickMeButton = new objects.Button("/Assets/images/click-me-button.png",320,400);
-    clickMeButton.regX = clickMeButton.getBounds().width * 0.5;
-    clickMeButton.regY = clickMeButton.getBounds().height * 0.5;
+    clickMeButton = new objects.Button(assetManager,"clickMeButton",320,400);
+    
 
   
     stage.addChild(clickMeButton);

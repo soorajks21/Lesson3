@@ -2,8 +2,10 @@ module objects{
     export class Button extends createjs.Bitmap{
 
         //constructor
-        constructor(imagePath:string, x : number =0, y:number =0){
-            super(imagePath);
+        constructor(assetmanager:createjs.LoadQueue,imageString:string, x : number =0, y:number =0){
+            super(assetmanager.getResult(imageString));
+            this.regX = this.getBounds().width*0.5;
+            this.regY= this.getBounds().height*0.5;
             this.x =x;
             this.y=y;
 
